@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrícula em disciplina</title>
+</head>
+<body>
+
+<h1>Matrícula em disciplina</h1>
+
+<p th:if="${sucesso}" th:text="${sucesso}" style="color: green;"></p>
+<p th:if="${erro}" th:text="${erro}" style="color: red;"></p>
+
+<form th:action="@{/matriculas}" method="post">
+
+    <label for="alunoId">Aluno</label>
+    <select id="alunoId" name="alunoId">
+        <option th:each="a : ${alunos}"
+                th:value="${a.id}"
+                th:text="${a.nome}"></option>
+    </select>
+
+    <label for="disciplinaId">Disciplina</label>
+    <select id="disciplinaId" name="disciplinaId">
+        <option th:each="d : ${disciplinas}"
+                th:value="${d.id}"
+                th:text="${d.nomeDisciplina + ' - ' + d.diaDisciplina + ' ' + d.turnoDisciplina}"></option>
+    </select>
+
+    <button type="submit">Matricular</button>
+</form>
+
+<h2>Matrículas atuais</h2>
+<ul>
+    <li th:each="m : ${matriculas}"
+        th:text="${m.aluno.nome + ' - ' + m.disciplina.nomeDisciplina + ' (' + m.status + ')'}"></li>
+</ul>
+
+</body>
+</html>
